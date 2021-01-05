@@ -1,2 +1,2 @@
-const express = require('express');
+const express = require('./lib/express');
 const app = express();
