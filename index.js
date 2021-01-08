@@ -7,11 +7,11 @@ app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-app.get('/movies', (req, res) => {
+app.get('/movies', (_req, res) => {
   res.json(topTenMovies);
 });
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('Welcome to myFlix!');
 });
 
