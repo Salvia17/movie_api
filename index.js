@@ -1,12 +1,17 @@
-const express = require('express');
+const express = require('express'),
+  morgan = require('morgan');
 
 const app = express();
+
+app.use(morgan('common'));
+
+app.use(express.static('public'));
 
 app.get('/movies', (req, res) => {
   res.json(topTenMovies);
 });
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
 
