@@ -6,6 +6,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DOCUMENTATION</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 
 <body>
@@ -20,6 +23,131 @@
       The web application will provide users with access to information about different movies, directors, and genres. Users
       will be able to sign up, update their personal information, and create a list of their favorite
       movies.</p>
+  </div>
+
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Business logic</th>
+          <th>URL endpoint</th>
+          <th>HTTP method</th>
+          <th>Request body data format</th>
+          <th>Request example</th>
+          <th>Response body data format</th>
+          <th>Response example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Return a list of ALL movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>/movies</td>
+          <td>A JSON object holding data about all the movies</td>
+          <td>Title and image</td>
+        </tr>
+        <tr>
+          <td>Return data about a single movie by title to the user</td>
+          <td>/movies/[title]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>/movies/pulp%20fiction</td>
+          <td>A JSON object holding data about a single movie,<br>
+            containing description, genre,<br>
+            director, image URL, whether it's featured or not.</td>
+          <td>Description: The lives of two mob hitmen,<br>
+            a boxer, a gangster and his wife,<br>
+            and a pair of diner bandits intertwine<br>
+            in four tales of violence and redemption.<br>
+            Genre: Crime, drama Director: Quentin Tarantino Image: Featured: true</td>
+        </tr>
+        <tr>
+          <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+          <td>/movies/genres/[genre]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>/movies/genres/crime</td>
+          <td>A JSON object holding data about a single movie genre</td>
+          <td>Name: Crime,<br>
+            Description: Crime films, in the broadest sense, is a film genre<br>
+            inspired by and analogous to the crime fiction literary genre.<br>
+            Films of this genre generally involve various aspects of crime<br>
+            and its detection. Stylistically, the genre may overlap and<br>
+            combine with many other genres, such as drama or gangster film,<br>
+            but also include comedy, and, in turn, is divided into many sub-genres,<br>
+            such as mystery, suspense or noir.</td>
+        </tr>
+        <tr>
+          <td>Return data about a director (bio, birth year, death year) by name</td>
+          <td>/movies/directors/[name]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>/movies/directors/quentin%20tarantino</td>
+          <td>A JSON object holding data about a single director, containing<br>
+            short biography, birth year, death year if applicable</td>
+          <td>Name: Quentin Jerome Tarantino<br>
+            Birth date: March 27, 1963,<br>
+            Bio: Quentin Jerome Tarantino is an American film director, screenwriter,<br>
+            producer, and actor. His films are characterized by nonlinear storylines,<br>
+            dark humor, aestheticization of violence, extended scenes of dialogue,<br>
+            ensemble casts, references to popular culture and a wide variety of other<br>
+            films, soundtracks primarily containing songs and score pieces from the<br>
+            1960s to the 1980s, alternate history, and features of neo-noir film.</td>
+        </tr>
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>A JSON object holding data about a new user, containing username,<br>
+            email address, password, date of birth</td>
+          <td>Username: salvia17, Email: salvija17@gmail.com <br>
+            Password: GondorCallsForAid! Date of birth: 17/02/1988</td>
+          <td>A JSON object holding data about a new user, containing username,<br>
+            email address, password, date of birth</td>
+          <td>Username: salvia17, Email: salvija17@gmail.com<br>
+            Password: GondorCallsForAid! Date of birth: 17/02/1988</td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info (username)</td>
+          <td>/users/[username]</td>
+          <td>PUT</td>
+          <td>None</td>
+          <td>/users/salvia_17/(new username)</td>
+          <td>A text message indicating that username has been updated</td>
+          <td>Message: "Your username has been updated succesfully"</td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>/users/[username]/favourites/[title]</td>
+          <td>POST</td>
+          <td>A JSON object holding data about added movie</td>
+          <td>/users/salvia_17/favourites/[title]</td>
+          <td>A JSON object holding data about added movie and a<br>
+            text message indicating that a movie has been added to favourites succesfully</td>
+          <td>Message: "Movie has been succesfully added to Favourites"</td>
+        </tr>
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites</td>
+          <td>/users/[username]/favourites/[title]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>/users/salvia_17/favourites/[title]</td>
+          <td>A text message indicating that a movie has been removed from favourites succesfully</td>
+          <td>Message: "Movie has been succesfully removed Favourites"</td>
+        </tr>
+        <tr>
+          <td>Allow existing users to deregister</td>
+          <td>/users/[username]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>users/salvia_17</td>
+          <td>A text message indicating that the user has been deregistered</td>
+          <td>Message: "You have succesfully deregistered from myFlix"</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
 </body>
