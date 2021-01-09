@@ -50,58 +50,58 @@ let topTenMovies = [
   },
 ];
 
-app.get('/', (_req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
 
 //Return a list of ALL movies
-app.get('/movies', (_req, res) => {
+app.get('/movies', (req, res) => {
   res.send('Successful GET request returning data on all the movies');
 });
 
 //Return data about a single movie by title
-app.get('/movies/:title', (_req, res) => {
-  res.send('Successful GET request returning data on single movie' + req.params.title);
+app.get('/movies/:title', (req, res) => {
+  res.send('Successful GET request returning data on movie: ' + req.params.title);
 });
 
 //Return data about a genre (description)
-app.get('/movies/genres/:genre', (_req, res) => {
-  res.send('Successful GET request returning data on movie genre' + req.params.genre);
+app.get('/movies/genres/:genre', (req, res) => {
+  res.send('Successful GET request returning data on movie genre: ' + req.params.genre);
 });
 
 //Return data about a director
-app.get('/movies/directors/:name', (_req, res) => {
-  res.send('Successful GET request returning data on single director' + req.params.name);
+app.get('/movies/directors/:name', (req, res) => {
+  res.send('Successful GET request returning data on director: ' + req.params.name);
 });
 
 //POST request to allow new users to register
-app.post('/users', (_req, res) => {
+app.post('/users', (req, res) => {
   res.send('Successful POST request registering new user');
 });
 
 //Allow users to update their user info (username)
-app.put('/users/:username', (_req, res) => {
-  res.send('Successful PUT request updating username' + req.params.username);
+app.put('/users/:username', (req, res) => {
+  res.send('Successful PUT request updating information for user: ' + req.params.username);
 });
 
 //Allow users to add a movie to their list of favorites
-app.post('/users/:username/favourites/:title', (_req, res) => {
-  res.send('Successful POST request adding movie by title'
-  + req.params.title + 'to list of favourites' + req.params.username);
+app.post('/users/:username/favourites/:title', (req, res) => {
+  res.send('Successful POST request adding movie: '
+  + req.params.title + ' to list the of ' + req.params.username + ' favourites');
 });
 
 //Allow users to remove a movie from their list of favorites
-app.delete('/users/:username/favourites/:title', (_req, res) => {
-  res.send('Successful DELETE request removing movie by title'
-  + req.params.title + 'from list of favourites' + req.params.username);
+app.delete('/users/:username/favourites/:title', (req, res) => {
+  res.send('Successful DELETE request removing movie: '
+  + req.params.title + ' from list of ' + req.params.username + ' favourites');
 });
 
 //Allow existing users to deregister 
-app.delete('/users/:username', (_req, res) => {
+app.delete('/users/:username', (req, res) => {
   res.send('Successful DELETE request removing user: ' + req.params.username + ' from database');
 });
 
-app.use((err, _req, res, _next) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Uh Oh! Something went wrong!');
 });

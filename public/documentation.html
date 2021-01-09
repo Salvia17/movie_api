@@ -50,17 +50,17 @@
         </tr>
         <tr>
           <td>Return data about a single movie by title to the user</td>
-          <td>/movies/[title]</td>
+          <td>/movies/:title</td>
           <td>GET</td>
           <td>None</td>
-          <td>/movies/pulp%20fiction</td>
-          <td>A JSON object holding data about a single movie,<br>
-            containing description, genre,<br>
-            director, image URL, whether it's featured or not.</td>
-          <td>Description: The lives of two mob hitmen,<br>
-            a boxer, a gangster and his wife,<br>
-            and a pair of diner bandits intertwine<br>
-            in four tales of violence and redemption.<br>
+          <td>/movies/Pulp%20Fiction</td>
+          <td>A JSON object holding data about a single movie,
+            containing description, genre,
+            director, image URL, whether it's featured or not.
+          <td>Description: The lives of two mob hitmen,
+            a boxer, a gangster and his wife,
+            and a pair of diner bandits intertwine
+            in four tales of violence and redemption.
             Genre: Crime, drama Director: Quentin Tarantino Image: Featured: true</td>
         </tr>
         <tr>
@@ -70,13 +70,13 @@
           <td>None</td>
           <td>/movies/genres/crime</td>
           <td>A JSON object holding data about a single movie genre</td>
-          <td>Name: Crime,<br>
-            Description: Crime films, in the broadest sense, is a film genre<br>
-            inspired by and analogous to the crime fiction literary genre.<br>
-            Films of this genre generally involve various aspects of crime<br>
-            and its detection. Stylistically, the genre may overlap and<br>
-            combine with many other genres, such as drama or gangster film,<br>
-            but also include comedy, and, in turn, is divided into many sub-genres,<br>
+          <td>Name: Crime<br>
+            Description: Crime films, in the broadest sense, is a film genre
+            inspired by and analogous to the crime fiction literary genre.
+            Films of this genre generally involve various aspects of crime
+            and its detection. Stylistically, the genre may overlap and
+            combine with many other genres, such as drama or gangster film,
+            but also include comedy, and, in turn, is divided into many sub-genres,
             such as mystery, suspense or noir.</td>
         </tr>
         <tr>
@@ -84,29 +84,29 @@
           <td>/movies/directors/[name]</td>
           <td>GET</td>
           <td>None</td>
-          <td>/movies/directors/quentin%20tarantino</td>
-          <td>A JSON object holding data about a single director, containing<br>
+          <td>/movies/directors/Quentin%20Tarantino</td>
+          <td>A JSON object holding data about a single director, containing
             short biography, birth year, death year if applicable</td>
           <td>Name: Quentin Jerome Tarantino<br>
             Birth date: March 27, 1963,<br>
-            Bio: Quentin Jerome Tarantino is an American film director, screenwriter,<br>
-            producer, and actor. His films are characterized by nonlinear storylines,<br>
-            dark humor, aestheticization of violence, extended scenes of dialogue,<br>
-            ensemble casts, references to popular culture and a wide variety of other<br>
-            films, soundtracks primarily containing songs and score pieces from the<br>
+            Bio: Quentin Jerome Tarantino is an American film director, screenwriter,
+            producer, and actor. His films are characterized by nonlinear storylines,
+            dark humor, aestheticization of violence, extended scenes of dialogue,
+            ensemble casts, references to popular culture and a wide variety of other
+            films, soundtracks primarily containing songs and score pieces from the
             1960s to the 1980s, alternate history, and features of neo-noir film.</td>
         </tr>
         <tr>
           <td>Allow new users to register</td>
           <td>/users</td>
           <td>POST</td>
-          <td>A JSON object holding data about a new user, containing username,<br>
+          <td>A JSON object holding data about a new user, containing username,
             email address, password, date of birth</td>
-          <td>Username: salvia17, Email: salvija17@gmail.com <br>
+          <td>Username: salvia17, Email: salvija17@gmail.com
             Password: GondorCallsForAid! Date of birth: 17/02/1988</td>
-          <td>A JSON object holding data about a new user, containing username,<br>
+          <td>A JSON object holding data about a new user, containing username,
             email address, password, date of birth</td>
-          <td>Username: salvia17, Email: salvija17@gmail.com<br>
+          <td>Username: salvia17, Email: salvija17@gmail.com
             Password: GondorCallsForAid! Date of birth: 17/02/1988</td>
         </tr>
         <tr>
@@ -114,7 +114,7 @@
           <td>/users/[username]</td>
           <td>PUT</td>
           <td>None</td>
-          <td>/users/salvia_17/(new username)</td>
+          <td>/users/salvia17</td>
           <td>A text message indicating that username has been updated</td>
           <td>Message: "Your username has been updated succesfully"</td>
         </tr>
@@ -123,8 +123,8 @@
           <td>/users/[username]/favourites/[title]</td>
           <td>POST</td>
           <td>A JSON object holding data about added movie</td>
-          <td>/users/salvia_17/favourites/[title]</td>
-          <td>A JSON object holding data about added movie and a<br>
+          <td>/users/salvia17/favourites/[title]</td>
+          <td>A JSON object holding data about added movie and a
             text message indicating that a movie has been added to favourites succesfully</td>
           <td>Message: "Movie has been succesfully added to Favourites"</td>
         </tr>
@@ -133,7 +133,7 @@
           <td>/users/[username]/favourites/[title]</td>
           <td>DELETE</td>
           <td>None</td>
-          <td>/users/salvia_17/favourites/[title]</td>
+          <td>/users/salvia17/favourites/[title]</td>
           <td>A text message indicating that a movie has been removed from favourites succesfully</td>
           <td>Message: "Movie has been succesfully removed Favourites"</td>
         </tr>
@@ -142,7 +142,7 @@
           <td>/users/[username]</td>
           <td>DELETE</td>
           <td>None</td>
-          <td>users/salvia_17</td>
+          <td>users/salvia17</td>
           <td>A text message indicating that the user has been deregistered</td>
           <td>Message: "You have succesfully deregistered from myFlix"</td>
         </tr>
