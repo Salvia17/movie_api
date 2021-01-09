@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Lato', sans-serif;
+  padding: 10px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+  vertical-align: top;
+  margin-top: 3px;
+  padding-left: 7px;
+  padding-top: 7px;
+}
