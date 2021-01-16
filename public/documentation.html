@@ -65,7 +65,7 @@
         </tr>
         <tr>
           <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
-          <td>/movies/genres/[genre]</td>
+          <td>/movies/genres/:name</td>
           <td>GET</td>
           <td>None</td>
           <td>/movies/genres/crime</td>
@@ -81,7 +81,7 @@
         </tr>
         <tr>
           <td>Return data about a director (bio, birth year, death year) by name</td>
-          <td>/movies/directors/[name]</td>
+          <td>/movies/directors/:name</td>
           <td>GET</td>
           <td>None</td>
           <td>/movies/directors/Quentin%20Tarantino</td>
@@ -111,7 +111,7 @@
         </tr>
         <tr>
           <td>Allow users to update their user info (username)</td>
-          <td>/users/[username]</td>
+          <td>/users/:username</td>
           <td>PUT</td>
           <td>None</td>
           <td>/users/salvia17</td>
@@ -120,26 +120,26 @@
         </tr>
         <tr>
           <td>Allow users to add a movie to their list of favorites</td>
-          <td>/users/[username]/favourites/[title]</td>
+          <td>/users/:username/:favouriteMovies/:movieID</td>
           <td>POST</td>
           <td>A JSON object holding data about added movie</td>
-          <td>/users/salvia17/favourites/[title]</td>
+          <td>/users/salvia17/favourite%20Movies/[movieID]</td>
           <td>A JSON object holding data about added movie and a
             text message indicating that a movie has been added to favourites succesfully</td>
           <td>Message: "Movie has been succesfully added to Favourites"</td>
         </tr>
         <tr>
           <td>Allow users to remove a movie from their list of favorites</td>
-          <td>/users/[username]/favourites/[title]</td>
+          <td>/users/:username/:favouriteMovies/:movieID</td>
           <td>DELETE</td>
           <td>None</td>
-          <td>/users/salvia17/favourites/[title]</td>
+          <td>/users/salvia17/favourite%20Movies/[movieID]</td>
           <td>A text message indicating that a movie has been removed from favourites succesfully</td>
           <td>Message: "Movie has been succesfully removed Favourites"</td>
         </tr>
         <tr>
           <td>Allow existing users to deregister</td>
-          <td>/users/[username]</td>
+          <td>/users/:username</td>
           <td>DELETE</td>
           <td>None</td>
           <td>users/salvia17</td>
