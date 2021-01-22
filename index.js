@@ -84,7 +84,7 @@ app.get('/movies/directors/:Name', (req, res) => {
 
 //POST request to allow new users to register
 app.post('/users', (req, res) => {
-  Users.findOne({ Username: req.body.Username }) //<--- this first serches if the user by entered username exists
+  Users.findOne({ Username: req.body.Username }) //<--- this first searches if the user by entered username exists
   .then((user) => {
     if (user) {
       return res.status(400).send(req.body.Username + 'already exists'); //<--- if it does, it returns an error with a message
