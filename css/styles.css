@@ -10,11 +10,18 @@ body {
 
 table, th, td {
   border: 1px solid black;
+  /*font-size: 14px;*/
+}
+
+table {
+  table-layout: fixed;
+  width: 100vw;
 }
 
 td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
   vertical-align: top;
-  margin-top: 3px;
-  padding-left: 7px;
   padding-top: 7px;
 }
