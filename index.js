@@ -23,6 +23,9 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+const cors = require('cors');
+app.use(cors());
+
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
@@ -91,6 +94,7 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', {session: false}
 
 //POST request to allow new users to register
 app.post('/users', (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username }) //<--- this first searches if the user by entered username exists
   .then((user) => {
     if (user) {
@@ -98,7 +102,7 @@ app.post('/users', (req, res) => {
     } else {
       Users.create({
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       })
