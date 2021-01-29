@@ -11,7 +11,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//Had to use useFindAndModify: false, as per Mongoose documentation, due to DeprecationWarning
+//Had to use useFindAndModify: false, as per Mongoose documentation, due to Deprecation Warning
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const app = express();
