@@ -11,9 +11,8 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//Had to use useFindAndModify: false, as per Mongoose documentation, due to Deprecation Warning
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
-
+//Had to use useFindAndModify: false, as per Mongoose documentation, due to Deprecation Warning
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const app = express();
@@ -144,6 +143,14 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
   ], (req, res) => {
+
+//Checks if the user taking action is the same user, that's logged in.
+    if (req.user.Username !== req.params.Username) {
+      return res.status(403).json({
+        error: {message: 'You can only update your own user.'},
+      })
+    };
+
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -171,6 +178,14 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
 
 //Allow users to add a movie to their list of favorites
 app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+//Checks if the user taking action is the same user, that's logged in.
+  if (req.user.Username !== req.params.Username) {
+    return res.status(403).json({
+      error: {message: 'You can only update your own user.'},
+    })
+  };
+
   Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavouriteMovies: req.params.MovieID }
   },
@@ -187,6 +202,14 @@ app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', {sessi
 
 //Allow users to remove a movie from their list of favorites
 app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+//Checks if the user taking action is the same user, that's logged in.
+  if (req.user.Username !== req.params.Username) {
+    return res.status(403).json({
+      error: {message: 'You can only update your own user.'},
+    })
+  };
+
   Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { FavouriteMovies: req.params.MovieID }
   },
@@ -203,14 +226,19 @@ app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', {ses
 
 //Allow existing users to deregister 
 app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+//Checks if the user taking action is the same user, that's logged in.
+  if (req.user.Username !== req.params.Username) {
+    return res.status(403).json({
+      error: {message: 'You can only delete your own user.'},
+    })
+  };
+
   Users.findOneAndRemove({ Username: req.params.Username })
   .then((user) => {
-    if (!user) {
-      res.status(400).send(req.params.Username + ' was not found');
-    } else {
       res.status(200).send(req.params.Username + ' was deleted.');
     }
-  })
+  )
   .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
