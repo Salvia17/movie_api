@@ -44,7 +44,7 @@ app.get('/movies'), (req, res) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
-});
+};
 
 //Return a list of ALL users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
