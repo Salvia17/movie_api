@@ -27,7 +27,11 @@ const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(cors('*')); //allow requests from all origins
+app.use(
+  cors ({
+    allowedHeaders: '*'
+  })
+); //allow requests from all origins
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
