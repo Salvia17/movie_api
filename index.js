@@ -27,11 +27,7 @@ const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(
-  cors ({
-    allowedHeaders: '*'
-  })
-); //allow requests from all origins
+app.use(cors()); //allow requests from all origins
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
@@ -51,10 +47,10 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 //Return a list of ALL users
-app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.find()
-    .then((users) => {
-      res.status(201).json(users);
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.status(201).json(user);
     })
     .catch((err) => {
       console.error(err);
@@ -251,6 +247,10 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 app.use((err, req, res, next) => {
+  res.setHeader('Acces-Control-Allow-Origin','*');
+  res.setHeader('Acces-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+  res.setHeader('Acces-Contorl-Allow-Methods','Content-Type','Authorization');
+  next();
   console.error(err.stack);
   res.status(500).send('Uh Oh! Something went wrong!');
 });
