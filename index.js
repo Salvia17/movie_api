@@ -23,25 +23,23 @@ app.use(bodyParser.json());
 
 let auth = require('./auth')(app);
 
+app.use('/login', require('./auth'));
+
 const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
 app.use(cors());
 
-let allowedOrigins = ['*', 'http://localhost:8080', 'http://localhost:1234', 'http://localhost:4200', 'https://project-my-flix.herokuapp.com/'];
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      //This occurs if the requesting origin isn't found on the list of allowed origins
-      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
-      return callback(new Error(message), false);
-    }
-    return callback(null, true);
-  }
-}));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Uh Oh! Something went wrong!');
+});
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
@@ -258,11 +256,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Uh Oh! Something went wrong!');
 });
 
 /*app.use((err, req, res, next) => {
