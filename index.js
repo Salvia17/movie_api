@@ -27,7 +27,11 @@ const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(cors()); //allow requests from all origins
+app.use(
+  cors({
+    allowedHeaders: '*',
+  })
+);
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
@@ -247,13 +251,18 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Uh Oh! Something went wrong!');
+});
+
+/*app.use((err, req, res, next) => {
   res.setHeader('Acces-Control-Allow-Origin','*');
   res.setHeader('Acces-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
   res.setHeader('Acces-Contorl-Allow-Methods','Content-Type','Authorization');
   next();
   console.error(err.stack);
   res.status(500).send('Uh Oh! Something went wrong!');
-});
+});*/
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
