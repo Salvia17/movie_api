@@ -29,10 +29,9 @@ require('./passport');
 const cors = require('cors');
 app.use(cors());
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", '*',
-    "http://localhost:4200/",
-    'https://project-my-flix.herokuapp.com/login');
+    "http://localhost:4200/");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
