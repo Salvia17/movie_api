@@ -5,6 +5,19 @@ const jwt = require('jsonwebtoken'),
 
 require('./passport'); //My local passport file
 
+const cors = require('cors');
+app.use(
+  cors({
+    allowedHeaders: '*',
+  })
+);
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.Username, //This is the username being encoded in the JWT
