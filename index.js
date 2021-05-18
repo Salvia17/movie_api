@@ -23,18 +23,16 @@ app.use(bodyParser.json());
 
 let auth = require('./auth')(app);
 
-app.use('/login', require('./auth'));
-
 const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(cors());
+app.use(
+  cors({
+    allowedHeaders: '*',
+  })
+);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
