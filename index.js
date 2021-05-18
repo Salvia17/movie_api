@@ -27,14 +27,19 @@ const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(cors());
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://localhost:4200'];
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", '*',
-    "http://localhost:4200");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      //This occurs if the requesting origin isn't found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
