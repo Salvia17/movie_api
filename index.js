@@ -29,7 +29,11 @@ require('./passport');
 const cors = require('cors');
 app.use(
   cors({
-    allowedHeaders: '*',
+    allowedHeaders: ['*',
+      'http://localhost:8080',
+      'http://localhost:1234',
+      'http://localhost:4200',
+      'https://project-my-flix.herokuapp.com/']
   })
 );
 
