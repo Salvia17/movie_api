@@ -27,11 +27,17 @@ const passport = require('passport');
 require('./passport');
 
 const cors = require('cors');
-app.use(
+/*app.use(
   cors({
     allowedHeaders: '*',
   })
-);
+);*/
+
+app.all('/', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next()
+});
 
 
 app.use((err, req, res, next) => {
@@ -41,24 +47,6 @@ app.use((err, req, res, next) => {
 
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
-});
-
-app.post('/login', (req, res) => {
-  passport.authenticate('local', { session: false }, (error, user, info) => {
-    if (error || !user) {
-      return res.status(400).json({
-        message: 'Something is not right',
-        user: user
-      });
-    }
-    req.login(user, { session: false }, (error) => {
-      if (error) {
-        res.send(error);
-      }
-      let token = generateJWTToken(user.toJSON());
-      return res.json({ user, token });
-    });
-  })(req, res);
 });
 
 //Return a list of ALL movies
