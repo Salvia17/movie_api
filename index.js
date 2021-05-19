@@ -29,11 +29,7 @@ require('./passport');
 const cors = require('cors');
 app.use(
   cors({
-    allowedHeaders: ['*',
-      'http://localhost:8080',
-      'http://localhost:1234',
-      'http://localhost:4200',
-      'https://project-my-flix.herokuapp.com/']
+    allowedHeaders: '*',
   })
 );
 
@@ -47,6 +43,23 @@ app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
 
+app.post('/login', (req, res) => {
+  passport.authenticate('local', { session: false }, (error, user, info) => {
+    if (error || !user) {
+      return res.status(400).json({
+        message: 'Something is not right',
+        user: user
+      });
+    }
+    req.login(user, { session: false }, (error) => {
+      if (error) {
+        res.send(error);
+      }
+      let token = generateJWTToken(user.toJSON());
+      return res.json({ user, token });
+    });
+  })(req, res);
+});
 
 //Return a list of ALL movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
