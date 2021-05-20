@@ -31,11 +31,11 @@ app.use(
   cors()
 );
 
-app.all('/', function (req, res, next) {
+app.all('/', function (req, res, router, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  req.header("Access-Control-Allow-Origin", "*");
-  req.header("Access-Control-Allow-Headers", "X-Requested-With");
+  router.header("Access-Control-Allow-Origin", "*");
+  router.header("Access-Control-Allow-Headers", "X-Requested-With");
   next()
 });
 
