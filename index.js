@@ -21,15 +21,15 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-let auth = require('./auth')(app);
-
-const passport = require('passport');
-require('./passport');
-
 const cors = require('cors');
 app.use(
   cors()
 );
+
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
 
 app.all('/', function (req, res, next) {
   req.header("Access-Control-Allow-Origin", "*");
