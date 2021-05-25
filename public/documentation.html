@@ -10,7 +10,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+  <link href="./css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -19,6 +19,7 @@
     <h2>Creating a REST API with Node.js</h2>
   </header>
 
+  <br><br>
   <div>
     <h3>Objective:</h3>
     <p>To build the server­side component of a “movies” web application.
@@ -27,180 +28,145 @@
       will be able to sign up, update their personal information, and create a list of their favorite
       movies.</p>
   </div>
-
+  <br>
   <div>
+    <h2>Accesing movies collection</h2>
+    <br>
     <table>
       <thead>
         <tr>
-          <th>Business logic</th>
-          <th>URL endpoint</th>
           <th>HTTP method</th>
-          <th>Request body data format</th>
-          <th>Request example</th>
-          <th>Response body data format</th>
-          <th>Response example</th>
+          <th>URL endpoint</th>
+          <th>Business logic</th>
+          <th>Request format</th>
+          <th>Response format</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Return a list of ALL movies to the user</td>
+          <td><span class='get'>GET</span></td>
           <td>/movies</td>
-          <td>GET</td>
+          <td>Return a list of ALL movies</td>
           <td>None</td>
-          <td>/movies</td>
-          <td>A JSON object</td>
-          <td>
-            [{
-            "Genre": { <br>
-            "Name": "Animation", <br>
-            "Description": "Animation is a method in which pictures are manipulated to appear as moving images.
-            In traditional animation, images are drawn or painted by hand on transparent
-            celluloid sheets to be photographed and exhibited on film."
-            },<br><br>
-            "Director": { <br>
-            "Name": "Hayao Miyazaki",<br>
-            "Bio": "Hayao Miyazaki is one of Japan's greatest animation directors.
-            The entertaining plots, compelling characters,
-            and breathtaking animation in his films have earned him international renown from
-            critics as well as public recognition within Japan.",<br>
-            "Birth": "1941-01-05"
-            },<br><br>
-            "_id": "6002dd5a12d9e42a0234071e",<br><br>
-            "Title": "Spirited Away",<br><br>
-            "Description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world
-            ruled by gods,
-            witches, and spirits, and where humans are changed into beasts.",<br><br>
-            "ImagePath":
-            "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg",<br><br>
-            "Featured": true<br><br>
-            } array of these movie objects]
-          </td>
+          <td>A JSON object with all movies data</td>
         </tr>
         <tr>
-          <td>Return data about a single movie by title to the user</td>
-          <td>/movies/:Title</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>/movies/Pulp%20Fiction</td>
-          <td>A JSON object</td>
-          <td>
-            [{
-            "Genre": {<br>
-            "Name": "Adventure",<br>
-            "Description": "Adventure films are a genre of film whose plots feature elements of travel.
-            They typically involve protagonists who must leave their home or place of comfort and go to far away lands
-            to fulfill a goal. <br>Settings play an important role in adventure films, sometimes as big as the
-            characters themselves."
-            },<br><br>
-            "Director": {<br>
-            "Name": "Peter Jackson",<br>
-            "Bio": "Sir Peter Robert Jackson is a New Zealand film director, producer, and screenwriter.",<br>
-            "Birth": "1961-10-31"<br>
-            },<br><br>
-            "_id": "6002dd2112d9e42a0234071c",<br><br>
-            "Title": "The Lord of the Rings: The Return of the King",<br><br>
-            "Description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his
-            gaze from Frodo and Sam as they approach Mount Doom with the One Ring.", <br><br>
-            "ImagePath":
-            "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg",<br><br>
-            "Featured": true<br><br>
-            } a single movie object]
-          </td>
+          <td class='row'><span class='get'>GET</span></td>
+          <td class='row'>/movies/:Title</td>
+          <td class='row'>Return data about a single movie by title</td>
+          <td class='row'>None</td>
+          <td class='row'>A JSON object with single movie data</td>
         </tr>
         <tr>
-          <td>Return data about a genre (description) by name (e.g., “Crime”)</td>
+          <td><span class='get'>GET</span></td>
           <td>/movies/genres/:Name</td>
-          <td>GET</td>
+          <td>Return data about a genre (description) by name (e.g., “Crime”)</td>
           <td>None</td>
-          <td>/movies/genres/Crime</td>
-          <td>A JSON object</td>
-          <td>[{
-            "Genre": {<br>
-            "Name": "Crime",<br><br>
-            "Description": "Crime films, in the broadest sense,
-            is a film genre inspired by and analogous to the crime
-            fiction literary genre. Films of this genre
-            generally involve various aspects of crime and its detection.
-            Stylistically, the genre may overlap and combine with many other
-            genres, such as drama or gangster film, but also include
-            comedy, and, in turn, is divided into many sub-genres,
-            such as mystery, suspense or noir."<br><br>
-            } single genre object]
-          </td>
+          <td>A JSON object with data about genre</td>
         </tr>
         <tr>
-          <td>Return data about a director (bio, birth year, death year) by name</td>
-          <td>/movies/directors/:Name</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>/movies/directors/Quentin%20Tarantino</td>
-          <td>A JSON object</td>
-          <td>[{"Director": {<br>
-            "Name": "Quentin Tarantino",<br><br>
-            "Bio": "Quentin Jerome Tarantino is an American film director, screenwriter, producer, and actor. He is one
-            bad MF",<br><br>
-            "Birth": "1963-03-27"} <br><br>single director object]
-          </td>
-        </tr>
-        <tr>
-          <td>Allow new users to register</td>
-          <td>/users</td>
-          <td>POST</td>
-          <td>A JSON object</td>
-          <td>{<br>Username: salvia17, <br>Email: salvija17@gmail.com<br>
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-          <td>A JSON object</td>
-          <td>{<br>FavouriteMovies: [], <br> _id: 6002e33812d9e42a02340723, <br>Username: salvia17, Email:
-            salvija17@gmail.com
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-        </tr>
-        <tr>
-          <td>Allow users to update their user info (username)</td>
-          <td>/users/:Username</td>
-          <td>PUT</td>
-          <td>A JSON object</td>
-          <td>{<br>Username: salvia17, <br>Email: salvija17@gmail.com<br>
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-          <td>A JSON object</td>
-          <td>{<br>FavouriteMovies: [], <br> _id: 6002e33812d9e42a02340723, <br>Username: salvia17, Email:
-            salvija17@gmail.com
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-        </tr>
-        <tr>
-          <td>Allow users to add a movie to their list of favorites</td>
-          <td>/users/:Username/Movies/:MovieID</td>
-          <td>POST</td>
-          <td>A JSON object</td>
-          <td>{_id: 6002dce612d9e42a0234071a}</td>
-          <td>Message</td>
-          <td>{<br>FavouriteMovies: [_id: 6002dce612d9e42a0234071a], <br> _id: 6002e33812d9e42a02340723, <br>Username:
-            salvia17, Email: salvija17@gmail.com
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-        </tr>
-        <tr>
-          <td>Allow users to remove a movie from their list of favorites</td>
-          <td>/users/:Username/Movies/:MovieID</td>
-          <td>DELETE</td>
-          <td>None</td>
-          <td>{_id: 6002dce612d9e42a0234071a}</td>
-          <td>Message</td>
-          <td>{<br>FavouriteMovies: [], <br> _id: 6002e33812d9e42a02340723, <br>Username: salvia17, Email:
-            salvija17@gmail.com
-            Password: GondorCallsForAid!<br> Date of birth: 17/02/1988<br>}</td>
-        </tr>
-        <tr>
-          <td>Allow existing users to deregister</td>
-          <td>/users/:Username</td>
-          <td>DELETE</td>
-          <td>None</td>
-          <td>users/salvia17</td>
-          <td>Message</td>
-          <td>salvia17 was deleted.</td>
+          <td class='row'><span class='get'>GET</span></td>
+          <td class='row'>/movies/directors/:Name</td>
+          <td class='row'>Return data about a director (bio, birth year, death year) by name</td>
+          <td class='row'>None</td>
+          <td class='row'>A JSON object with data about director</td>
         </tr>
       </tbody>
     </table>
   </div>
-
+  <div>
+    <br>
+    <h2>Accesing users collection</h2>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th>HTTP method</th>
+          <th>URL endpoint</th>
+          <th>Business logic</th>
+          <th>Request format</th>
+          <th>Response format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class='post'>POST</span></td>
+          <td>/users</td>
+          <td>Allow new users to register</td>
+          <td>A JSON object</td>
+          <td>A JSON object with data of new user</td>
+        <tr>
+          <td class='row'><span class='put'>PUT</span></td>
+          <td class='row'>/users/:Username</td>
+          <td class='row'>Allow users to update their user info</td>
+          <td class='row'>A JSON object</td>
+          <td class='row'>A JSON object with updated user data</td>
+        <tr>
+          <td><span class='post'>POST</span></td>
+          <td>/users/:Username/Movies/:MovieID</td>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>None</td>
+          <td>An updated array of user's favorites</td>
+        </tr>
+        <tr>
+          <td class='row'><span class='delete'>DELETE</span></td>
+          <td class='row'>/users/:Username/Movies/:MovieID</td>
+          <td class='row'>Allow users to remove a movie from their list of favorites</td>
+          <td class='row'>None</td>
+          <td class='row'>An updated array of user's favorites</td>
+        </tr>
+        <tr>
+          <td><span class='delete'>DELETE</span></td>
+          <td>/users/:Username</td>
+          <td>Allow existing users to deregister</td>
+          <td>None</td>
+          <td>Message confirming that account was deleted</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class='examples'>
+    <br>
+    <h2>Sample Requests & Responses for /movies</h2>
+    <h3><span class='get'>GET</span> request for all movies. (e.g. /movies)</h3>
+    <br>
+    <img src='./img/get_movies.png' />
+    <br>
+    <h3><span class='get'>GET</span> request for a single movie. (e.g. /movies/Spirited%20Away)</h3>
+    <br>
+    <img src='./img/get_single_movie.png' />
+    <br>
+    <h3><span class='get'>GET</span> request for a specific movie genre. (e.g. /movies/genres/Adventure)</h3>
+    <br>
+    <img src='./img/get_genre.png' />
+    <br>
+    <h3><span class='get'>GET</span> request for a specific director. (e.g. /movies/directors/Peter%20Jackson)</h3>
+    <br>
+    <img src='./img/get_director.png' />
+    <br>
+    <h2>Sample Requests & Responses for /users</h2>
+    <h3><span class='post'>POST</span> request to add new user (e.g. /users)</h3>
+    <br>
+    <img src='./img/post_user.png' />
+    <br>
+    <h3><span class='put'>PUT</span> request to update user information (e.g. /users/creatingauser)</h3>
+    <br>
+    <img src='./img/put_user.png' />
+    <br>
+    <h3><span class='post'>POST</span> request to add a movie to user's list of favorites (e.g.
+      /users/updating/Movies/:MovieID)</h3>
+    <br>
+    <img src='./img/post_favorite.png' />
+    <br>
+    <h3><span class='delete'>DELETE</span> a movie from user's list of favorites (e.g.
+      /users/updating/Movies/:MovieID)</h3>
+    <br>
+    <img src='./img/delete_favorite.png' />
+    <br>
+    <h3><span class='delete'>DELETE</span> a user's account(e.g. /users/updating)</h3>
+    <br>
+    <img src='./img/delete_user.png' />
+  </div>
 </body>
 
 </html>
