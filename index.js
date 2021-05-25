@@ -7,6 +7,7 @@ const
 
 const { check, validationResult } = require('express-validator');
 
+const app = express();
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -14,8 +15,6 @@ const Users = Models.User;
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 //Had to use useFindAndModify: false, as per Mongoose documentation, due to Deprecation Warning
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
-
-const app = express();
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -26,28 +25,24 @@ app.use(
   cors()
 );
 
+/**
+ * Import auth.js file for api call to login endpoint and authentication
+ */
 let auth = require('./auth')(app);
 
 const passport = require('passport');
 require('./passport');
 
-app.all('/', function (req, res, next) {
-  req.header("Access-Control-Allow-Origin", "*");
-  req.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next()
-});
-
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Uh Oh! Something went wrong!');
-});
-
+/**
+ * API call to welcoming page
+ */
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!');
 });
 
-//Return a list of ALL movies
+/**
+ * API call to return a list of all movies
+ */
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
@@ -59,7 +54,9 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
     });
 });
 
-//Return a list of ALL users
+/**
+ * API call to return information on user by username
+ */
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({ Username: req.params.Username })
     .then((user) => {
@@ -71,7 +68,9 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
     });
 });
 
-//Return data about a single movie by title
+/**
+ * API call to return information on single movie by title
+ */
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.Title })
     .then((movie) => {
@@ -83,7 +82,9 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
     });
 });
 
-//Return data about a genre by name (description)
+/**
+ * API call to return data about a genre by name (description)
+ */
 app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ 'Genre.Name': req.params.Name })
     .then((movie) => {
@@ -96,7 +97,9 @@ app.get('/movies/genres/:Name', passport.authenticate('jwt', { session: false })
 });
 
 
-//Return data about a director by name
+/**
+ * API call to return data about a director by name
+ */
 app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ 'Director.Name': req.params.Name })
     .then((movie) => {
@@ -108,7 +111,9 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
     });
 });
 
-//POST request to allow new users to register
+/** 
+ * API call to allow new users to register
+ */
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -148,7 +153,9 @@ app.post('/users', [
     });
 });
 
-//Allow users to update their user info (by username)
+/**
+ * API call to allow users to update their user info (by username)
+ */
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
@@ -190,7 +197,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
       });
   });
 
-//Allow users to add a movie to their list of favorites
+/**
+ * API call to allow users to add a movie to their list of favorites
+ */
 app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
 
   //Checks if the user taking action is the same user, that's logged in.
@@ -214,7 +223,9 @@ app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { sess
     });
 });
 
-//Allow users to remove a movie from their list of favorites
+/**
+ * API call to allow users to remove a movie from their list of favorites
+ */
 app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
 
   //Checks if the user taking action is the same user, that's logged in.
@@ -238,7 +249,9 @@ app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { se
     });
 });
 
-//Allow existing users to deregister 
+/**
+ * API call to allow existing users to deregister 
+ */
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
 
   //Checks if the user taking action is the same user, that's logged in.
@@ -259,14 +272,10 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 
-/*app.use((err, req, res, next) => {
-  res.setHeader('Acces-Control-Allow-Origin','*');
-  res.setHeader('Acces-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
-  res.setHeader('Acces-Contorl-Allow-Methods','Content-Type','Authorization');
-  next();
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Uh Oh! Something went wrong!');
-});*/
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
